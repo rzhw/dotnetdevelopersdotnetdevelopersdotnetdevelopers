@@ -35,12 +35,12 @@ namespace dotnetdevelopersdotnetdevelopersdotnetdevelopers
             var il = mainMethodBuilder.GetILGenerator();
 
             // Define the pointer and array
-            var arr = il.DeclareLocal(typeof(byte[]));
+            var arr = il.DeclareLocal(typeof(sbyte[]));
             var ptr = il.DeclareLocal(typeof(int));
 
             // Program runs in an array of 30000 bytes
             il.Emit(OpCodes.Ldc_I4, 30000);
-            il.Emit(OpCodes.Newarr, typeof(byte));
+            il.Emit(OpCodes.Newarr, typeof(sbyte));
             il.Emit(OpCodes.Stloc, arr);
 
             // Parse each token
@@ -83,7 +83,7 @@ namespace dotnetdevelopersdotnetdevelopersdotnetdevelopers
                         // Load the element from the array
                         il.Emit(OpCodes.Ldloc, arr);
                         il.Emit(OpCodes.Ldloc, ptr);
-                        il.Emit(OpCodes.Ldelem_U1);
+                        il.Emit(OpCodes.Ldelem_I1);
 
                         // Load 1 onto the stack and then do the add/subtract
                         il.Emit(OpCodes.Ldc_I4_1);
@@ -104,7 +104,7 @@ namespace dotnetdevelopersdotnetdevelopersdotnetdevelopers
                         il.Emit(OpCodes.Ldloc, arr);
                         il.Emit(OpCodes.Ldloc, ptr);
                         il.Emit(OpCodes.Ldelem_U1);
-                        il.Emit(OpCodes.Call, typeof(Console).GetMethod("Write", new Type[] { typeof(byte) }));
+                        il.Emit(OpCodes.Call, typeof(Console).GetMethod("Write", new Type[] { typeof(char) }));
                         break;
 
                     // Equivalent to `while (*ptr)`
@@ -118,9 +118,9 @@ namespace dotnetdevelopersdotnetdevelopersdotnetdevelopers
                         il.Emit(OpCodes.Ldloc, ptr);
                         il.Emit(OpCodes.Ldelem_U1);
 
-                        // Jump to after loop if *ptr != 0
+                        // Jump to after loop if *ptr == 0
                         il.Emit(OpCodes.Ldc_I4_0);
-                        il.Emit(OpCodes.Bne_Un, loopEnd);
+                        il.Emit(OpCodes.Beq, loopEnd);
 
                         // Emit the inside of the loop
                         EmitFromTree(il, token, arr, ptr);
