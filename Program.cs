@@ -29,7 +29,8 @@ namespace dotnetdevelopersdotnetdevelopersdotnetdevelopers
 <-
 ]
              */
-            var parser = new Parser(@"
+
+            string source = @"
 Developers Developers Developers Developers Developers Developers Developers Developers
 DevelopersDevelopersDevelopersDevelopersDevelopersDevelopersDevelopers
 DevelopersDevelopersDevelopers Developers Developers Developers Developers
@@ -46,11 +47,11 @@ DevelopersDevelopersDevelopers DevelopersDevelopers
 DevelopersDevelopersDevelopers DevelopersDevelopersDevelopers Developers
 DevelopersDevelopersDevelopersDevelopersDevelopersDevelopersDevelopers DevelopersDevelopersDevelopersDevelopers DevelopersDevelopersDevelopersDevelopersDevelopersDevelopersDevelopersDevelopers
 DevelopersDevelopersDevelopersDevelopers DevelopersDevelopers
-DevelopersDevelopersDevelopersDevelopersDevelopersDevelopersDevelopersDevelopers");
+DevelopersDevelopersDevelopersDevelopersDevelopersDevelopersDevelopersDevelopers";
 
             try
             {
-                var ast = parser.Parse();
+                Generator.Generate(source, "helloworld");
 
                 Console.ReadLine();
             }
