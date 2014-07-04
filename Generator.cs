@@ -76,18 +76,23 @@ namespace dotnetdevelopersdotnetdevelopersdotnetdevelopers
                     // Load the index in the array, modify it, and restore it
                     case TokenKind.IncrementPointee:
                     case TokenKind.DecrementPointee:
+                        // Prepare for storing the modified element into the array
                         il.Emit(OpCodes.Ldloc, arr);
                         il.Emit(OpCodes.Ldloc, ptr);
-
+                        
+                        // Load the element from the array
+                        il.Emit(OpCodes.Ldloc, arr);
+                        il.Emit(OpCodes.Ldloc, ptr);
                         il.Emit(OpCodes.Ldelem_U1);
+
+                        // Load 1 onto the stack and then do the add/subtract
                         il.Emit(OpCodes.Ldc_I4_1);
-                        if (token.Value == TokenKind.IncrementPointer)
+                        if (token.Value == TokenKind.IncrementPointee)
                             il.Emit(OpCodes.Add);
                         else
                             il.Emit(OpCodes.Sub);
 
-                        il.Emit(OpCodes.Ldloc, arr);
-                        il.Emit(OpCodes.Ldloc, ptr);
+                        // The second arr/ptr were consumed so now we consume the first ones
                         il.Emit(OpCodes.Stelem_I1);
                         break;
 
