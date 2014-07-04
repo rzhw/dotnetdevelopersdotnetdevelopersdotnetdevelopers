@@ -35,7 +35,7 @@ namespace dotnetdevelopersdotnetdevelopersdotnetdevelopers
             var il = mainMethodBuilder.GetILGenerator();
 
             // Define the pointer and array
-            var arr = il.DeclareLocal(typeof(int));
+            var arr = il.DeclareLocal(typeof(byte[]));
             var ptr = il.DeclareLocal(typeof(int));
 
             // Program runs in an array of 30000 bytes
